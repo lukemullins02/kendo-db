@@ -66,7 +66,7 @@ function Form({ setClaim, toggleDialog, selectedClaim }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="claim-form" onSubmit={handleSubmit}>
       <div>
         <label>Name</label>
         <TextBox

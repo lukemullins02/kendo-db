@@ -3,6 +3,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import Form from "./components/Form";
 import { useState } from "react";
 import { Dialog } from "@progress/kendo-react-dialogs";
+import "./App.css";
 
 const sampleClaims = [
   {
@@ -38,17 +39,20 @@ export default function App() {
   return (
     <div style={{ padding: 20 }}>
       <h2>Claim Intake Dashboard</h2>
+
       {!visibleDialog && (
-        <Button
-          type="button"
-          themeColor="primary"
-          onClick={() => {
-            setSelectedClaim(null);
-            toggleDialog();
-          }}
-        >
-          Add Claim
-        </Button>
+        <div className="center-claim">
+          <Button
+            type="button"
+            themeColor="primary"
+            onClick={() => {
+              setSelectedClaim(null);
+              toggleDialog();
+            }}
+          >
+            Add Claim
+          </Button>
+        </div>
       )}
 
       {visibleDialog && (

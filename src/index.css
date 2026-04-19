@@ -1,0 +1,22 @@
+h2 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.center-claim {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.center-claim > Button {
+  font-size: large;
+}
