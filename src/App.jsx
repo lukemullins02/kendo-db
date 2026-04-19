@@ -52,9 +52,11 @@ export default function App() {
       )}
 
       {visibleDialog && (
-        <Dialog title={selectedClaim ? "Update Claim" : "Add Claim"}>
+        <Dialog
+          onClose={toggleDialog}
+          title={selectedClaim ? "Update Claim" : "Add Claim"}
+        >
           <Form
-            claim={claim}
             setClaim={setClaim}
             toggleDialog={toggleDialog}
             selectedClaim={selectedClaim}

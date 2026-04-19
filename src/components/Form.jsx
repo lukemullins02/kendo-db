@@ -7,7 +7,7 @@ import { useState } from "react";
 const types = ["Auto", "Injury", "Property", "Disability"];
 const status = ["New", "In Progress", "Under Review", "Completed", "Closed"];
 
-function Form({ claim, setClaim, toggleDialog, selectedClaim }) {
+function Form({ setClaim, toggleDialog, selectedClaim }) {
   const [userInput, setUserInput] = useState(
     selectedClaim || {
       name: "",
@@ -18,6 +18,12 @@ function Form({ claim, setClaim, toggleDialog, selectedClaim }) {
       desc: "",
     },
   );
+
+  const handleDelete = () => {
+    setClaim((prev) => prev.filter((c) => c.id !== selectedClaim.id));
+
+    toggleDialog();
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -124,7 +130,7 @@ function Form({ claim, setClaim, toggleDialog, selectedClaim }) {
       <Button themeColor="primary" type="submit">
         Submit
       </Button>
-      <Button onClick={toggleDialog}>Close</Button>
+      {selectedClaim && <Button onClick={handleDelete}>Delete</Button>}
     </form>
   );
 }
