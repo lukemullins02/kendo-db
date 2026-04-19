@@ -7,18 +7,22 @@ import "./App.css";
 
 const sampleClaims = [
   {
-    id: "CLM-1001",
+    id: "CLM-" + Math.floor(100000 + Math.random() * 900000),
     name: "John Smith",
     type: "Auto",
-    status: "New",
-    dateFiled: "2026-04-10",
+    date_incident: new Date(),
+    date_filed: new Date(),
+    status: "Under Review",
+    desc: "Auto mobile accident",
   },
   {
-    id: "CLM-1002",
+    id: "CLM-" + Math.floor(100000 + Math.random() * 900000),
     name: "Sarah Johnson",
     type: "Injury",
-    status: "Under Review",
-    dateFiled: "2026-04-12",
+    date_incident: new Date(),
+    date_filed: new Date(),
+    status: "New",
+    desc: "Injured in work accident",
   },
 ];
 
@@ -56,19 +60,28 @@ export default function App() {
       )}
 
       {visibleDialog && (
-        <Dialog
-          onClose={toggleDialog}
-          title={selectedClaim ? "Update Claim" : "Add Claim"}
-        >
-          <Form
-            setClaim={setClaim}
-            toggleDialog={toggleDialog}
-            selectedClaim={selectedClaim}
-          />
-        </Dialog>
+        <>
+          <div className="center-claim">
+            <Button themeColor="primary">Add Claim</Button>
+          </div>
+          <Dialog
+            onClose={toggleDialog}
+            title={selectedClaim ? "Update Claim" : "Add Claim"}
+          >
+            <Form
+              setClaim={setClaim}
+              toggleDialog={toggleDialog}
+              selectedClaim={selectedClaim}
+            />
+          </Dialog>
+        </>
       )}
 
-      <Grid onRowClick={handleRowClick} data={claim}>
+      <Grid
+        style={{ cursor: "pointer" }}
+        onRowClick={handleRowClick}
+        data={claim}
+      >
         <GridColumn field="id" title="Claim ID" />
         <GridColumn field="name" title="Name" />
         <GridColumn field="type" title="Type" />
