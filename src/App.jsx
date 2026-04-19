@@ -24,32 +24,45 @@ const sampleClaims = [
 export default function App() {
   const [claim, setClaim] = useState([...sampleClaims]);
   const [visibleDialog, setVisibleDialog] = useState(false);
+  const [selectedClaim, setSelectedClaim] = useState(null);
 
   const toggleDialog = () => {
     setVisibleDialog(!visibleDialog);
+  };
+
+  const handleRowClick = (e) => {
+    setSelectedClaim(e.dataItem);
+    setVisibleDialog(true);
   };
 
   return (
     <div style={{ padding: 20 }}>
       <h2>Claim Intake Dashboard</h2>
       {!visibleDialog && (
-        <Button type="button" onClick={toggleDialog}>
+        <Button
+          type="button"
+          themeColor="primary"
+          onClick={() => {
+            setSelectedClaim(null);
+            toggleDialog();
+          }}
+        >
           Add Claim
         </Button>
       )}
 
       {visibleDialog && (
-        <Dialog>
-          <Form claim={claim} setClaim={setClaim} toggleDialog={toggleDialog} />
+        <Dialog title={selectedClaim ? "Update Claim" : "Add Claim"}>
+          <Form
+            claim={claim}
+            setClaim={setClaim}
+            toggleDialog={toggleDialog}
+            selectedClaim={selectedClaim}
+          />
         </Dialog>
       )}
 
-      <Grid
-        onRowClick={() => {
-          console.log("hello");
-        }}
-        data={claim}
-      >
+      <Grid onRowClick={handleRowClick} data={claim}>
         <GridColumn field="id" title="Claim ID" />
         <GridColumn field="name" title="Name" />
         <GridColumn field="type" title="Type" />

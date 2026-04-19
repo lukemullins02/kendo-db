@@ -7,15 +7,17 @@ import { useState } from "react";
 const types = ["Auto", "Injury", "Property", "Disability"];
 const status = ["New", "In Progress", "Under Review", "Completed", "Closed"];
 
-function Form({ claim, setClaim, toggleDialog }) {
-  const [userInput, setUserInput] = useState({
-    name: "",
-    type: "Auto",
-    date_incident: new Date(),
-    date_filed: new Date(),
-    status: "New",
-    desc: "",
-  });
+function Form({ claim, setClaim, toggleDialog, selectedClaim }) {
+  const [userInput, setUserInput] = useState(
+    selectedClaim || {
+      name: "",
+      type: "Auto",
+      date_incident: new Date(),
+      date_filed: new Date(),
+      status: "New",
+      desc: "",
+    },
+  );
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,21 +38,23 @@ function Form({ claim, setClaim, toggleDialog }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newClaim = {
-      id: "CLM-" + Math.floor(100000 + Math.random() * 900000),
-      ...userInput,
-    };
+    if (selectedClaim) {
+      const updatedClaim = {
+        ...selectedClaim,
+        ...userInput,
+      };
 
-    setClaim([...claim, newClaim]);
+      setClaim((prev) =>
+        prev.map((c) => (c.id === updatedClaim.id ? updatedClaim : c)),
+      );
+    } else {
+      const newClaim = {
+        id: "CLM-" + Math.floor(100000 + Math.random() * 900000),
+        ...userInput,
+      };
 
-    setUserInput({
-      name: "",
-      type: "Auto",
-      date_incident: new Date(),
-      date_filed: new Date(),
-      status: "New",
-      desc: "",
-    });
+      setClaim((prev) => [...prev, newClaim]);
+    }
 
     toggleDialog();
   };
